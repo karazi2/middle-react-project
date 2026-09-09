@@ -1,29 +1,12 @@
-import { Preloader } from '@krgaa/react-developer-burger-ui-components';
-import { useEffect, useState } from 'react';
-
 import { AppHeader } from '@components/app-header/app-header';
 import { BurgerConstructor } from '@components/burger-constructor/burger-constructor';
 import { BurgerIngredients } from '@components/burger-ingredients/burger-ingredients';
-import { getIngredients } from '@utils/api';
+import { useGetIngredientsQuery } from '@services/ingredients/api';
 
 import styles from './app.module.css';
 
 export const App = () => {
-  const [ingredients, setIngredients] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    getIngredients()
-      .then((data) => {
-        setIngredients(data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        setError(error.message);
-        setIsLoading(false);
-      });
-  }, []);
+  const { data: ingredients = [], isLoading, isError } = useGetIngredientsQuery();
 
   return (
     <div className={styles.app}>
@@ -33,18 +16,18 @@ export const App = () => {
         Соберите бургер
       </h1>
 
-      {isLoading && <Preloader />}
-
-      {error && (
-        <p className="text text_type_main-default">
-          Не удалось загрузить ингредиенты: {error}
-        </p>
+      {isLoading && (
+        <p className="text text_type_main-medium">Загрузка ингредиентов...</p>
       )}
 
-      {!isLoading && !error && (
+      {isError && (
+        <p className="text text_type_main-medium">Не удалось загрузить ингредиенты</p>
+      )}
+
+      {!isLoading && !isError && (
         <main className={`${styles.main} pl-5 pr-5`}>
           <BurgerIngredients ingredients={ingredients} />
-          <BurgerConstructor ingredients={ingredients} />
+          <BurgerConstructor />
         </main>
       )}
     </div>
