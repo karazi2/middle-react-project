@@ -6,6 +6,7 @@ import {
 } from '@krgaa/react-developer-burger-ui-components';
 import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Modal } from '@components/modal/modal';
 import { OrderDetails } from '@components/order-details/order-details';
@@ -18,6 +19,7 @@ import {
   removeIngredient,
 } from '@services/burger-constructor/slice';
 import { useCreateOrderMutation } from '@services/order/api';
+import { userSlice } from '@services/user/slice';
 
 import styles from './burger-constructor.module.css';
 
@@ -105,8 +107,15 @@ const ConstructorIngredient = ({ ingredient, index, onRemove }) => {
 export const BurgerConstructor = () => {
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const user = useSelector(userSlice.selectors.getUser);
+
   const bun = useSelector(getConstructorBun);
+
   const ingredients = useSelector(getConstructorIngredients);
+
   const totalPrice = useSelector(getConstructorTotalPrice);
 
   const [
@@ -138,7 +147,10 @@ export const BurgerConstructor = () => {
       },
 
       collect: (monitor) => ({
-        isOver: monitor.isOver({ shallow: true }),
+        isOver: monitor.isOver({
+          shallow: true,
+        }),
+
         draggedType: monitor.getItem()?.ingredient?.type ?? null,
       }),
     }),
@@ -155,6 +167,16 @@ export const BurgerConstructor = () => {
 
   const handleCreateOrder = () => {
     if (!bun) {
+      return;
+    }
+
+    if (!user) {
+      navigate('/login', {
+        state: {
+          from: location,
+        },
+      });
+
       return;
     }
 

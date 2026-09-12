@@ -1,34 +1,98 @@
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+
 import { AppHeader } from '@components/app-header/app-header';
-import { BurgerConstructor } from '@components/burger-constructor/burger-constructor';
-import { BurgerIngredients } from '@components/burger-ingredients/burger-ingredients';
-import { useGetIngredientsQuery } from '@services/ingredients/api';
+import { IngredientDetails } from '@components/ingredient-details/ingredient-details';
+import { Modal } from '@components/modal/modal';
+import { ProtectedRoute } from '@components/protected-route/protected-route';
+import { Feed } from '@pages/feed/feed';
+import { ForgotPasswordPage } from '@pages/forgot-password/forgot-password';
+import { Home } from '@pages/home/home';
+import { IngredientDetailsPage } from '@pages/ingredient-details-page/ingredient-details-page';
+import { LoginPage } from '@pages/login/login';
+import { NotFound } from '@pages/not-found/not-found';
+import { ProfileOrderPage } from '@pages/profile-orders/profile-orders';
+import { ProfilePage } from '@pages/profile/profile';
+import { ProfileForm } from '@pages/profile/profile-form';
+import { RegisterPage } from '@pages/register/register';
+import { ResetPasswordPage } from '@pages/reset-password/reset-password';
+import { clearCurrentIngredient } from '@services/current-ingredient/slice';
+import { checkUserAuth } from '@services/user/actions';
 
 import styles from './app.module.css';
 
+const IngredientModal = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleClose = () => {
+    dispatch(clearCurrentIngredient());
+    navigate(-1);
+  };
+
+  return (
+    <Modal title="Детали ингредиента" onClose={handleClose}>
+      <IngredientDetails />
+    </Modal>
+  );
+};
+
 export const App = () => {
-  const { data: ingredients = [], isLoading, isError } = useGetIngredientsQuery();
+  const dispatch = useDispatch();
+
+  const location = useLocation();
+
+  const backgroundLocation = location.state?.backgroundLocation;
+
+  useEffect(() => {
+    dispatch(checkUserAuth());
+  }, [dispatch]);
 
   return (
     <div className={styles.app}>
       <AppHeader />
 
-      <h1 className={`${styles.title} text text_type_main-large mt-10 mb-5 pl-5`}>
-        Соберите бургер
-      </h1>
+      <Routes location={backgroundLocation || location}>
+        <Route path="/" element={<Home />} />
 
-      {isLoading && (
-        <p className="text text_type_main-medium">Загрузка ингредиентов...</p>
-      )}
+        <Route path="/ingredients/:id" element={<IngredientDetailsPage />} />
 
-      {isError && (
-        <p className="text text_type_main-medium">Не удалось загрузить ингредиенты</p>
-      )}
+        <Route path="/feed" element={<Feed />} />
 
-      {!isLoading && !isError && (
-        <main className={`${styles.main} pl-5 pr-5`}>
-          <BurgerIngredients ingredients={ingredients} />
-          <BurgerConstructor />
-        </main>
+        <Route
+          path="/register"
+          element={<ProtectedRoute onlyUnAuth component={<RegisterPage />} />}
+        />
+
+        <Route
+          path="/login"
+          element={<ProtectedRoute onlyUnAuth component={<LoginPage />} />}
+        />
+
+        <Route
+          path="/forgot-password"
+          element={<ProtectedRoute onlyUnAuth component={<ForgotPasswordPage />} />}
+        />
+
+        <Route
+          path="/reset-password"
+          element={<ProtectedRoute onlyUnAuth component={<ResetPasswordPage />} />}
+        />
+
+        <Route path="/profile" element={<ProtectedRoute component={<ProfilePage />} />}>
+          <Route index element={<ProfileForm />} />
+
+          <Route path="orders" element={<ProfileOrderPage />} />
+        </Route>
+
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+
+      {backgroundLocation && (
+        <Routes>
+          <Route path="/ingredients/:id" element={<IngredientModal />} />
+        </Routes>
       )}
     </div>
   );
