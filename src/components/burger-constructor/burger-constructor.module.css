@@ -1,42 +1,84 @@
 .burger_constructor {
   display: flex;
   flex-direction: column;
+  gap: 16px;
   width: 600px;
-  min-height: 0;
-  padding-top: 100px;
+  padding-top: 60px;
   padding-bottom: 20px;
   color: var(--text-primary-color);
 }
 
-.locked_element {
-  margin-left: 32px;
-  padding-right: 16px;
+.bun {
+  padding-left: 32px;
 }
 
-.list {
+.ingredients {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  min-height: 80px;
-  max-height: calc(100vh - 536px);
-  margin: 16px 0;
+  max-height: 464px;
+  margin: 0;
   padding: 0 8px 0 0;
   overflow-y: auto;
-  list-style-type: none;
+  list-style: none;
 }
 
-.item {
+.ingredient {
   display: flex;
-  flex-shrink: 0;
   align-items: center;
   gap: 8px;
+  margin: 0;
+  padding: 0;
+  cursor: grab;
 }
 
-.footer {
+.ingredient:active {
+  cursor: grabbing;
+}
+
+.drag_icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dragging {
+  opacity: 0.4;
+}
+
+.placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80px;
+  margin-left: 32px;
+  background: var(--background-element);
+  border: 2px dashed #4c4cff;
+  border-radius: 40px;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.bun_top {
+  border-radius: 88px 88px 40px 40px;
+}
+
+.bun_bottom {
+  border-radius: 40px 40px 88px 88px;
+}
+
+.placeholder_hovered {
+  background: #2f2f37;
+  border-color: #8585ff;
+}
+
+.order {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   gap: 40px;
+  margin-top: 24px;
   padding-right: 16px;
 }
 
@@ -44,4 +86,10 @@
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.error {
+  margin: 8px 16px 0 0;
+  color: #e52b1a;
+  text-align: right;
 }
