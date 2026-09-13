@@ -1,0 +1,22 @@
+.title {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1240px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.main {
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.message {
+  width: 100%;
+  max-width: 1240px;
+  margin: 40px auto 0;
+  text-align: center;
+}

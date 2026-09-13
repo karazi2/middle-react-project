@@ -2,15 +2,10 @@ import { Counter, CurrencyIcon, Tab } from '@krgaa/react-developer-burger-ui-com
 import { useRef, useState } from 'react';
 import { useDrag } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import { IngredientDetails } from '@components/ingredient-details/ingredient-details';
-import { Modal } from '@components/modal/modal';
 import { getIngredientCounts } from '@services/burger-constructor/slice';
-import {
-  clearCurrentIngredient,
-  getCurrentIngredient,
-  setCurrentIngredient,
-} from '@services/current-ingredient/slice';
+import { setCurrentIngredient } from '@services/current-ingredient/slice';
 
 import styles from './burger-ingredients.module.css';
 
@@ -53,8 +48,8 @@ const IngredientCard = ({ ingredient, count, onClick }) => {
 
 export const BurgerIngredients = ({ ingredients }) => {
   const dispatch = useDispatch();
-
-  const selectedIngredient = useSelector(getCurrentIngredient);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const ingredientCounts = useSelector(getIngredientCounts);
 
@@ -73,10 +68,12 @@ export const BurgerIngredients = ({ ingredients }) => {
 
   const handleIngredientClick = (ingredient) => {
     dispatch(setCurrentIngredient(ingredient));
-  };
 
-  const handleCloseModal = () => {
-    dispatch(clearCurrentIngredient());
+    navigate(`/ingredients/${ingredient._id}`, {
+      state: {
+        backgroundLocation: location,
+      },
+    });
   };
 
   const handleTabClick = (value) => {
@@ -94,7 +91,6 @@ export const BurgerIngredients = ({ ingredients }) => {
     }
 
     const containerRect = container.getBoundingClientRect();
-
     const targetRect = target.getBoundingClientRect();
 
     container.scrollTo({
@@ -203,12 +199,6 @@ export const BurgerIngredients = ({ ingredients }) => {
 
         {renderIngredients(mains)}
       </div>
-
-      {selectedIngredient && (
-        <Modal title="Детали ингредиента" onClose={handleCloseModal}>
-          <IngredientDetails ingredient={selectedIngredient} />
-        </Modal>
-      )}
     </section>
   );
 };

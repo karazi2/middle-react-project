@@ -1,0 +1,26 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 480px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+}
+
+.cancel {
+  padding: 0;
+  color: #4c4cff;
+  font: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.error {
+  margin-top: 16px;
+  color: #e52b1a;
+}

@@ -1,0 +1,48 @@
+.page {
+  display: flex;
+  gap: 60px;
+  width: 100%;
+  max-width: 1240px;
+  margin: 120px auto 0;
+}
+
+.navigation {
+  flex-shrink: 0;
+  width: 320px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link,
+.logout {
+  display: flex;
+  align-items: center;
+  min-height: 64px;
+  padding: 0;
+  color: #8585ad;
+  font: inherit;
+  text-decoration: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.active {
+  color: #f2f2f3;
+}
+
+.description {
+  margin-top: 80px;
+  color: #8585ad;
+  opacity: 0.4;
+}
+
+.content {
+  width: 480px;
+}
