@@ -15,7 +15,7 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
-    "allowJs": true,
+    "allowJs": false,
     "resolveJsonModule": true,
 
     /* Paths */
@@ -39,5 +39,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "e2e"],
+  "include": ["src", "e2e"]
 }
