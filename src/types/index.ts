@@ -83,3 +83,27 @@ export type MoveIngredientPayload = {
   dragIndex: number;
   hoverIndex: number;
 };
+
+export type OrderStatus = 'created' | 'pending' | 'done';
+
+export type Order = {
+  ingredients: string[];
+  _id: string;
+  status: OrderStatus;
+  number: number;
+  createdAt: string;
+  updatedAt: string;
+  name?: string;
+};
+
+export type OrdersResponse = {
+  success: boolean;
+  orders: Order[];
+  total: number;
+  totalToday: number;
+};
+
+export type OrderResponse = {
+  success: boolean;
+  orders: Order[];
+};
