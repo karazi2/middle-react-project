@@ -1,0 +1,89 @@
+.order {
+  width: 100%;
+}
+
+.number {
+  margin: 0;
+  text-align: center;
+}
+
+.name {
+  margin-bottom: 0;
+}
+
+.status {
+  margin-bottom: 0;
+}
+
+.done {
+  color: #0cc;
+}
+
+.ingredients {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 312px;
+  padding-right: 16px;
+  overflow-y: auto;
+}
+
+.ingredient {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+
+.ingredientInfo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+.imageContainer {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  overflow: hidden;
+  background: #131316;
+  border: 2px solid #801ab2;
+  border-radius: 50%;
+}
+
+.image {
+  width: 112px;
+  max-width: none;
+  height: 56px;
+  object-fit: cover;
+}
+
+.ingredientName {
+  margin: 0;
+}
+
+.ingredientPrice,
+.total {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+
+.message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 240px;
+}
