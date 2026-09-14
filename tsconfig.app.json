@@ -5,10 +5,9 @@
     "useDefineForClassFields": true,
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "ESNext",
-    "types": ["@testing-library/jest-dom/vitest", "vite/client"],
+    "types": ["@testing-library/jest-dom/vitest", "vite/client", "node"],
     "skipLibCheck": true,
 
-    /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
@@ -18,7 +17,6 @@
     "allowJs": false,
     "resolveJsonModule": true,
 
-    /* Paths */
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
@@ -31,7 +29,6 @@
       "@utils/*": ["src/utils/*"]
     },
 
-    /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
